@@ -10,7 +10,7 @@ import noise
 
 size('A3')
 
-n_w = 21    
+n_w = 22    
 n_h = round(n_w * sqrt(2))
 
 m = width()/n_w * 0.1
@@ -41,17 +41,17 @@ tints = [
     'fae6f1',	
     'ffffff'
     ]
+        
+colors = {
+    'top': hex2rgb(tints[pl(tints, 0.2)]),
+    'left': hex2rgb(tints[pl(tints, 0.4)]),
+    'right': hex2rgb(tints[pl(tints, 0.5)]),
+    'bottom': hex2rgb(tints[pl(tints, 0.75)]),
+    'fill': hex2rgb(tints[pl(tints, 0.1)])
+    }
 
 for _x in range(n_w):
     for _y in range(n_h):
-        
-        colors = {
-            'top': hex2rgb(tints[pl(tints, 0.2)]),
-            'left': hex2rgb(tints[pl(tints, 0.5)]),
-            'right': hex2rgb(tints[pl(tints, 0.6)]),
-            'bottom': hex2rgb(tints[pl(tints, 0.8)]),
-            'fill': hex2rgb(tints[pl(tints, 0.1)])
-            }
         
         x0 = _x * w + m
         y0 = _y * h + m
@@ -67,15 +67,15 @@ for _x in range(n_w):
         stroke(1)
         fill(1)
         
-        frac = 0.6 # % of bigger rect
-        small_s = w * frac
-        
         # part perlin, half noise 
-        perlin = 0.7
+        perlin = 0.9
         
         r1 = perlin * abs(noise.pnoise1(_x/n_w)) + (1-perlin) * random()
         r2 = perlin * abs(noise.pnoise1(_y/n_h)) + (1-perlin) * random()
         # print(f'{r1} {r2}')
+        
+        frac = 0.1 + 0.45 * r1 + 0.45 * r2 # % of bigger rect
+        small_s = w * frac
         
         sx0 = x0 + r1 * (1 - frac) * w
         sy0 = y0 + r2 * (1 - frac) * h
