@@ -13,13 +13,21 @@ h = (height() - 2*m)/n_h
 for _x in range(n_w):
     for _y in range(n_h):
         
+        colors = {
+            'top': {'r':0.6, 'g':0, 'b':0},
+            'left': {'r':0.4, 'g':0, 'b':0},
+            'right': {'r':0.3, 'g':0, 'b':0},
+            'bottom': {'r':0.2, 'g':0, 'b':0},
+            'fill': {'r':0.1, 'g':0, 'b':0},
+            }
+        
         x0 = _x * w + m
         y0 = _y * h + m
         
         # big rect
-        if False:
-            strokeWidth(1)
-            stroke(1)
+        if True:
+            strokeWidth(2)
+            stroke(**colors['left'])
             fill(0)
             rect(x0, y0, w, h)
         
@@ -27,20 +35,12 @@ for _x in range(n_w):
         stroke(1)
         fill(1)
         
-        colors = {
-            'top': {'r':0.6, 'g':0, 'b':0},
-            'left': {'r':0.4, 'g':0, 'b':0},
-            'right': {'r':0.4, 'g':0, 'b':0},
-            'bottom': {'r':0.2, 'g':0, 'b':0},
-            'fill': {'r':1, 'g':0, 'b':0},
-            }
-        
-        frac = 0.3 # % of bigger rect
+        frac = 0.6 # % of bigger rect
         small_s = w * frac
         
         # part perlin, half noise 
-        r1 = 0.7 * abs(noise.pnoise1(_x/n_w, octaves=2)) + 0.3 * random()
-        r2 = 0.7 * abs(noise.pnoise1(_y/n_h, octaves=2)) + 0.3 * random()
+        r1 = 0.4 * abs(noise.pnoise1(_x/n_w)) + 0.6 * random()
+        r2 = 0.4 * abs(noise.pnoise1(_y/n_h)) + 0.6 * random()
         # print(f'{r1} {r2}')
         
         sx0 = x0 + r1 * (1 - frac) * w
