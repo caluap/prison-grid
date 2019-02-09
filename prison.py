@@ -1,8 +1,16 @@
+def hex2rgb(c_hex):
+    c = tuple(int(c_hex[i:i+2], 16)/255 for i in (0, 2, 4))
+    return {'r':c[0], 'g':c[1], 'b':c[2]}
+    
+def pl(l, p):
+    return round(len(l)*p)
+
+
 import noise
 
 size('A3')
 
-n_w = 9
+n_w = 21    
 n_h = round(n_w * sqrt(2))
 
 m = width()/n_w * 0.1
@@ -10,15 +18,39 @@ m = width()/n_w * 0.1
 w = (width() - 2*m)/n_w
 h = (height() - 2*m)/n_h
 
+tints = [
+    '000000',
+    '14010b',	
+    '290117',	
+    '3d0222',	
+    '51032e',	
+    '660439',	
+    '7a0444',	
+    '8e0550',	
+    'a2065b',	
+    'b70667',	
+    'cb0772',	
+    'd02080',	
+    'd5398e',	
+    'db519c',	
+    'e06aaa',	
+    'e583b9',	
+    'ea9cc7',	
+    'efb5d5',	
+    'f5cde3',	
+    'fae6f1',	
+    'ffffff'
+    ]
+
 for _x in range(n_w):
     for _y in range(n_h):
         
         colors = {
-            'top': {'r':0.6, 'g':0, 'b':0},
-            'left': {'r':0.4, 'g':0, 'b':0},
-            'right': {'r':0.3, 'g':0, 'b':0},
-            'bottom': {'r':0.2, 'g':0, 'b':0},
-            'fill': {'r':0.1, 'g':0, 'b':0},
+            'top': hex2rgb(tints[pl(tints, 0.2)]),
+            'left': hex2rgb(tints[pl(tints, 0.5)]),
+            'right': hex2rgb(tints[pl(tints, 0.6)]),
+            'bottom': hex2rgb(tints[pl(tints, 0.8)]),
+            'fill': hex2rgb(tints[pl(tints, 0.1)])
             }
         
         x0 = _x * w + m
@@ -39,8 +71,10 @@ for _x in range(n_w):
         small_s = w * frac
         
         # part perlin, half noise 
-        r1 = 0.4 * abs(noise.pnoise1(_x/n_w)) + 0.6 * random()
-        r2 = 0.4 * abs(noise.pnoise1(_y/n_h)) + 0.6 * random()
+        perlin = 0.7
+        
+        r1 = perlin * abs(noise.pnoise1(_x/n_w)) + (1-perlin) * random()
+        r2 = perlin * abs(noise.pnoise1(_y/n_h)) + (1-perlin) * random()
         # print(f'{r1} {r2}')
         
         sx0 = x0 + r1 * (1 - frac) * w
