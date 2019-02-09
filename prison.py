@@ -15,16 +15,25 @@ for _x in range(n_w):
         y0 = _y * h + m
         
         # big rect
-        strokeWidth(1)
-        stroke(1)
-        fill(0)
-        rect(x0, y0, w, h)
+        if False:
+            strokeWidth(1)
+            stroke(1)
+            fill(0)
+            rect(x0, y0, w, h)
         
         # small rect
         stroke(1)
         fill(1)
         
-        frac = 0.4 # % of bigger rect
+        colors = {
+            'top': {'r':0.9, 'g':0, 'b':0},
+            'left': {'r':0.4, 'g':0, 'b':0},
+            'right': {'r':0.4, 'g':0, 'b':0},
+            'bottom': {'r':0.2, 'g':0, 'b':0},
+            'fill': {'r':1, 'g':0, 'b':0},
+            }
+        
+        frac = 0.6 # % of bigger rect
         small_s = w * frac        
         sx0 = x0 + random() * (1 - frac) * w
         sy0 = y0 + random() * (1 - frac) * h
@@ -35,12 +44,20 @@ for _x in range(n_w):
         sx1 = sx0 + small_s
         sy1 = sy0 + small_s
         
+        strokeWidth(0)
         
-        line((x0, y0), (sx0, sy0))
-        line((x1, y0), (sx1, sy0))
-        line((x0, y1), (sx0, sy1))
-        line((x1, y1), (sx1, sy1))
+        fill(**colors['left'])
+        polygon((x0, y0), (x0, y1), (sx0, sy1), (sx0, sy0), close = True)
         
-        # strokeWidth(0)
+        fill(**colors['right'])
+        polygon((x1, y1), (x1, y0), (sx1, sy0), (sx1, sy1), close = True)
+        
+        fill(**colors['top'])        
+        polygon((x0, y1), (x1, y1), (sx1, sy1), (sx0, sy1), close = True)
+        
+        fill(**colors['bottom'])
+        polygon((x0, y0), (x1, y0), (sx1, sy0), (sx0, sy0), close = True)
+        
+        fill(**colors['fill'])
         rect(sx0, sy0, small_s, small_s)
     
