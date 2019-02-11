@@ -10,10 +10,10 @@ import noise
 
 size('A3')
 
-n_w = 22    
+n_w = 19   
 n_h = round(n_w * sqrt(2))
 
-m = width()/n_w * 0.1
+m = 0#width()/n_w * 0.1
 
 w = (width() - 2*m)/n_w
 h = (height() - 2*m)/n_h
@@ -58,7 +58,7 @@ for _x in range(n_w):
         
         # big rect
         if True:
-            strokeWidth(2)
+            strokeWidth(1)
             stroke(**colors['left'])
             fill(0)
             rect(x0, y0, w, h)
@@ -68,13 +68,13 @@ for _x in range(n_w):
         fill(1)
         
         # part perlin, half noise 
-        perlin = 0.9
+        perlin = 0.93
         
-        r1 = perlin * abs(noise.pnoise1(_x/n_w)) + (1-perlin) * random()
-        r2 = perlin * abs(noise.pnoise1(_y/n_h)) + (1-perlin) * random()
+        r1 = perlin * abs(noise.pnoise1(_x/n_w, repeat=n_w, octaves=2)) + (1-perlin) * random()
+        r2 = perlin * abs(noise.pnoise1(_y/n_h, repeat=n_h, octaves=4)) + (1-perlin) * random()
         # print(f'{r1} {r2}')
         
-        frac = 0.1 + 0.45 * r1 + 0.45 * r2 # % of bigger rect
+        frac = min([1.0, 0.25 + 0.5 * r1 + 0.5 * r2]) # % of bigger rect
         small_s = w * frac
         
         sx0 = x0 + r1 * (1 - frac) * w
