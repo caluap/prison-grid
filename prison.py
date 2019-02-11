@@ -10,13 +10,9 @@ if n_h == 0:
     aux_n_w = n_w
     n_w = round(width()/height())
     print(f'Too few squares to fill this page! \nYou’d need {n_w} squares, so we went ahead and overrode your initial setting of {aux_n_w}!')
-    
-    
 
-m = 0
-
-w = (width() - 2*m)/n_w
-h = (height() - 2*m)/n_h
+w = (width())/n_w
+h = (height())/n_h
 
 transparent_bg = False
 
@@ -33,8 +29,8 @@ if not transparent_bg:
 for _x in range(n_w):
     for _y in range(n_h):
         
-        x0 = _x * w + m
-        y0 = _y * h + m
+        x0 = _x * w
+        y0 = _y * h
         
         # part perlin, half noise 
         perlin = 0.93
