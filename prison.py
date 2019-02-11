@@ -1,10 +1,17 @@
 import noise
 
 size('A3')
-stroke(None)
 
-n_w = 19   
-n_h = round(n_w * sqrt(2))
+n_w = 19
+n_h = round(n_w * height()/width())
+
+if n_h == 0:
+    n_h = 1
+    aux_n_w = n_w
+    n_w = round(width()/height())
+    print(f'Too few squares to fill this page! \nYou’d need {n_w} squares, so we went ahead and overrode your initial setting of {aux_n_w}!')
+    
+    
 
 m = 0
 
@@ -16,7 +23,7 @@ transparent_bg = False
 # 1 : boxes only
 # 2 : lines only
 # 3 : 3d boxes
-mode = 2
+mode = 3
 
 if not transparent_bg:
     cmykFill(0,0,0,1)
@@ -51,9 +58,11 @@ for _x in range(n_w):
         
         
         if mode == 1:
+            stroke(1)
             cmykFill(.18, 1, .25, 0)
             rect(x0, y0, w, h)
-            
+
+            stroke(None)            
             cmykFill(.48, 1, .48, .48)
             rect(sx0, sy0, small_s, small_s)
             
@@ -74,6 +83,9 @@ for _x in range(n_w):
             polygon((x0, y0), (x1, y0), (sx1, sy0), (sx0, sy0), close = True)
         
         if mode == 3:
+            
+            stroke(None)
+            
             # Left
             cmykFill(.29, 1, .29, .19)
             polygon((x0, y0), (x0, y1), (sx0, sy1), (sx0, sy0), close = True)
