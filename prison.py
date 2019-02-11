@@ -13,7 +13,15 @@ h = (height() - 2*m)/n_h
 
 transparent_bg = False
 
-mode = 3
+# 1 : boxes only
+# 2 : lines only
+# 3 : 3d boxes
+mode = 2
+
+if not transparent_bg:
+    cmykFill(0,0,0,1)
+    rect(0,0,width(),height())
+    
 
 for _x in range(n_w):
     for _y in range(n_h):
@@ -24,15 +32,16 @@ for _x in range(n_w):
         # part perlin, half noise 
         perlin = 0.93
         
-        r1 = perlin * abs(noise.pnoise1((n_w-_x)/n_w, repeat=n_w//8)) + (1-perlin) * random()
-        r2 = perlin * abs(noise.pnoise1((n_h-_y)/n_h, repeat=n_h//8)) + (1-perlin) * random()
-        # print(f'{r1} {r2}')
+        rx = perlin * abs(noise.pnoise1(_x/n_w, repeat=n_w//8)) + (1-perlin) * random()
+        ry = perlin * abs(noise.pnoise1(_y/n_h, repeat=n_h)) + (1-perlin) * random()
         
-        frac = min([0.9, 0.2 + 0.4 * r1 + 0.4 * r2]) # % of bigger rect
+        frac = min([0.9, 0.2 + 0.4 * rx + 0.4 * ry])
+        
+        
         small_s = w * frac
         
-        sx0 = x0 + r1 * (1 - frac) * w
-        sy0 = y0 + r2 * (1 - frac) * h
+        sx0 = x0 + rx * (1 - frac) * w
+        sy0 = y0 + ry * (1 - frac) * h
         
         x1 = x0 + w
         y1 = y0 + h
@@ -41,7 +50,7 @@ for _x in range(n_w):
         sy1 = sy0 + small_s
         
         
-        if mode == 1 or mode == 2:
+        if mode == 1:
             cmykFill(.18, 1, .25, 0)
             rect(x0, y0, w, h)
             
@@ -50,7 +59,7 @@ for _x in range(n_w):
             
         if mode == 2:                        
             fill(None)
-            stroke(1)
+            cmykStroke(.18, 1, .25, 0)
             
             # Left
             polygon((x0, y0), (x0, y1), (sx0, sy1), (sx0, sy0), close = True)
