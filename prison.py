@@ -1,6 +1,14 @@
 import noise
 
+
+transparent_bg = True
+
+# 1 : boxes only
+# 2 : lines only
+# 3 : 3d boxes
+mode = 3
 s_mode = 2
+mode_adjustment = 1
 
 # Poster
 if s_mode == 1:
@@ -10,6 +18,7 @@ elif s_mode == 2:
     # Facebook
     size(1702, 630)
     n_w = 60
+    mode_adjustment = 1.2
 elif s_mode == 3:
     # Twitter    
     size(1500, 500)
@@ -25,13 +34,6 @@ if n_h == 0:
 
 w = (width())/n_w
 h = (height())/n_h
-
-transparent_bg = False
-
-# 1 : boxes only
-# 2 : lines only
-# 3 : 3d boxes
-mode = 3
 
 if not transparent_bg:
     cmykFill(0,0,0,1)
@@ -52,6 +54,7 @@ for _x in range(n_w):
         
         frac = min([0.9, 0.2 + 0.4 * rx + 0.4 * ry])
         
+        frac = min([0.9, frac*mode_adjustment])
         
         small_s = w * frac
         
