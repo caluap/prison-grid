@@ -1,8 +1,20 @@
 import noise
 
-size('A3')
+s_mode = 2
 
-n_w = 19
+# Poster
+if s_mode == 1:
+    size('A3')
+    n_w = 19
+elif s_mode == 2:
+    # Facebook
+    size(1702, 630)
+    n_w = 60
+elif s_mode == 3:
+    # Twitter    
+    size(1500, 500)
+    n_w = 53
+    
 n_h = round(n_w * height()/width())
 
 if n_h == 0:
@@ -35,7 +47,7 @@ for _x in range(n_w):
         # part perlin, half noise 
         perlin = 0.93
         
-        rx = perlin * abs(noise.pnoise1(_x/n_w, repeat=n_w//8)) + (1-perlin) * random()
+        rx = perlin * abs(noise.pnoise1(_x/n_w, repeat=n_w)) + (1-perlin) * random()
         ry = perlin * abs(noise.pnoise1(_y/n_h, repeat=n_h)) + (1-perlin) * random()
         
         frac = min([0.9, 0.2 + 0.4 * rx + 0.4 * ry])
