@@ -9,6 +9,8 @@ mode = 3
 s_mode = 4
 mode_adjustment = 1
 
+use_cmyk = True
+
 # Poster
 if s_mode == 1:
     size('A3')
@@ -18,15 +20,18 @@ elif s_mode == 2:
     size(1702, 630)
     n_w = 60
     mode_adjustment = 1.2
+    use_cmyk = False
 elif s_mode == 3:
     # Twitter    
     size(1500, 500)
     n_w = 53
     mode_adjustment = 1.3
+    use_cmyk = False
 elif s_mode == 4:
     # Site background texture    
     size(1280, 640)
     n_w = 44
+    use_cmyk = False
     
 n_h = round(n_w * height()/width())
 
@@ -40,7 +45,10 @@ w = (width())/n_w
 h = (height())/n_h
 
 if not transparent_bg:
-    cmykFill(0,0,0,1)
+    if use_cmyk:
+        cmykFill(0,0,0,1)
+    else:
+        fill(0)
     rect(0,0,width(),height())
     
 
@@ -74,17 +82,26 @@ for _x in range(n_w):
         
         if mode == 1:
             stroke(1)
-            cmykFill(.18, 1, .25, 0)
+            if use_cmyk:
+                cmykFill(.18, 1, .25, 0)
+            else:
+                fill(210/255, 9/255, 119/255)
             rect(x0, y0, w, h)
 
-            stroke(None)            
-            cmykFill(.48, 1, .48, .48)
+            stroke(None)
+            if use_cmyk:
+                cmykFill(.48, 1, .48, .48)
+            else:
+                fill(93/255, 5/255, 58/255)
             rect(sx0, sy0, small_s, small_s)
             
         if mode == 2:                        
             fill(None)
-            cmykStroke(.18, 1, .25, 0)
-            
+            if use_cmyk:
+                cmykStroke(.18, 1, .25, 0)
+            else:
+                stroke(210/255, 9/255, 119/255)
+                        
             # Left
             polygon((x0, y0), (x0, y1), (sx0, sy1), (sx0, sy0), close = True)
         
@@ -101,19 +118,33 @@ for _x in range(n_w):
             
             stroke(None)
             
-            # Left
-            cmykFill(.29, 1, .29, .19)
+            # Left            
+            if use_cmyk:
+                cmykFill(.29, 1, .29, .19)
+            else:
+                fill(160/255, 11/255, 100/255)
+
             polygon((x0, y0), (x0, y1), (sx0, sy1), (sx0, sy0), close = True)
         
-            # Right
-            cmykFill(.18, 1, .25, 0)
+            # Right            
+            if use_cmyk:
+                cmykFill(.18, 1, .25, 0)
+            else:
+                fill(210/255, 9/255, 119/255)
             polygon((x1, y1), (x1, y0), (sx1, sy0), (sx1, sy1), close = True)
         
-            # Top       
-            cmykFill(.48, 1, .48, .48)
+            # Top            
+            if use_cmyk:
+                cmykFill(.48, 1, .48, .48)
+            else:
+                fill(93/255, 5/255, 58/255)
             polygon((x0, y1), (x1, y1), (sx1, sy1), (sx0, sy1), close = True)
         
             # Bottom
-            cmykFill(0, .73, 0, .13)        
+            if use_cmyk:
+                cmykFill(0, .73, 0, .13)
+            else:
+                fill(214/255, 82/255, 149/255)
+                    
             polygon((x0, y0), (x1, y0), (sx1, sy0), (sx0, sy0), close = True)
     
