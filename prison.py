@@ -1,13 +1,12 @@
 import noise
 
-
 transparent_bg = True
 
 # 1 : boxes only
 # 2 : lines only
 # 3 : 3d boxes
 mode = 3
-s_mode = 2
+s_mode = 4
 mode_adjustment = 1
 
 # Poster
@@ -23,6 +22,11 @@ elif s_mode == 3:
     # Twitter    
     size(1500, 500)
     n_w = 53
+    mode_adjustment = 1.3
+elif s_mode == 4:
+    # Site background texture    
+    size(1280, 640)
+    n_w = 44
     
 n_h = round(n_w * height()/width())
 
