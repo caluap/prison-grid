@@ -6,7 +6,7 @@ transparent_bg = True
 # 2 : lines only
 # 3 : 3d boxes
 mode = 3
-s_mode = 4
+s_mode = 5
 mode_adjustment = 1
 
 use_cmyk = True
@@ -30,7 +30,12 @@ elif s_mode == 3:
 elif s_mode == 4:
     # Site background texture    
     size(1280, 640)
-    n_w = 44
+    n_w = 22
+    use_cmyk = False
+elif s_mode == 5:    
+    # Instagram Post    
+    size(1080, 1080)
+    n_w = 33
     use_cmyk = False
     
 n_h = round(n_w * height()/width())
