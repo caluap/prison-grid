@@ -6,36 +6,41 @@ transparent_bg = True
 # 2 : lines only
 # 3 : 3d boxes
 mode = 3
-s_mode = 5
+s_mode = 6
 mode_adjustment = 1
 
 use_cmyk = True
 
-# Poster
-if s_mode == 1:
+if s_mode == 1: # Poster
     size('A3')
     n_w = 19
-elif s_mode == 2:
-    # Facebook
+
+elif s_mode == 2: # Facebook
     size(1702, 630)
     n_w = 60
     mode_adjustment = 1.2
     use_cmyk = False
-elif s_mode == 3:
-    # Twitter    
+
+elif s_mode == 3: # Twitter        
     size(1500, 500)
     n_w = 53
     mode_adjustment = 1.3
     use_cmyk = False
-elif s_mode == 4:
-    # Site background texture    
+
+elif s_mode == 4: # Site background texture    
     size(1280, 640)
     n_w = 22
     use_cmyk = False
-elif s_mode == 5:    
-    # Instagram Post    
+
+elif s_mode == 5: # Instagram Post    
     size(1080, 1080)
     n_w = 33
+    mode_adjustment = 1.8
+    use_cmyk = False
+
+elif s_mode == 6: # Youtube cover
+    size(2560, 1440)
+    n_w = 80
     use_cmyk = False
     
 n_h = round(n_w * height()/width())
